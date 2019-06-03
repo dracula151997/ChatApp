@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.semicolon.course.edx.chatapp.ChatApplication;
 import com.semicolon.course.edx.chatapp.R;
@@ -15,7 +17,8 @@ import com.semicolon.course.edx.chatapp.lib.ImageLoader;
 import com.semicolon.course.edx.chatapp.listeners.OnItemClickListener;
 import com.semicolon.course.edx.chatapp.model.User;
 import com.semicolon.course.edx.chatapp.ui.addcontact.ui.AddContactFragment;
-import com.semicolon.course.edx.chatapp.ui.chat.ChatActivity;
+import com.semicolon.course.edx.chatapp.ui.chat.ui.ChatActivity;
+import com.semicolon.course.edx.chatapp.ui.login.ui.LoginActivity;
 import com.semicolon.course.edx.chatapp.ui.main.presenter.ContactListPresenterImpl;
 import com.semicolon.course.edx.chatapp.ui.main.presenter.IContactListPresenter;
 
@@ -127,5 +130,21 @@ public class ContactListActivity extends AppCompatActivity implements IContactLi
     public void onViewClicked() {
         AddContactFragment addContactFragment = new AddContactFragment();
         addContactFragment.show(getSupportFragmentManager(), "");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_log_out){
+            presenter.signOff();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

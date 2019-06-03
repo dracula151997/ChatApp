@@ -17,6 +17,8 @@ import java.util.Map;
 public class FirebaseHelper {
     private static final String USER_PATH = "users";
     private static final String CONTACTS_PATH = "contacts";
+    public static final String CHAT_PATH = "chat";
+    public static final String SEPARATOR = "_";
     private DatabaseReference databaseReference;
 
     public void changeUserConnectionStatus(boolean online) {
@@ -111,6 +113,22 @@ public class FirebaseHelper {
     public DatabaseReference getOnContactsReference(String mainEmail, String childEmail) {
         String childKey = childEmail.replace(".", "_");
         return getUserReference(mainEmail).child(CONTACTS_PATH).child(childKey);
+    }
+
+    public DatabaseReference getChatsReference(String receiver){
+        String senderKey = getAuthUserEmail().replace(".", "_");
+        String keyReceiver = receiver.replace(".", "_");
+
+        String chatKey = senderKey + SEPARATOR + keyReceiver;
+        if (senderKey.compareTo(keyReceiver) > 0){
+            chatKey = keyReceiver + SEPARATOR + senderKey;
+
+        }
+
+        return databaseReference.getRoot().child(CHAT_PATH)
+                .child(chatKey);
+
+
     }
 
 
