@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.semicolon.course.edx.chatapp.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class FirebaseHelper {
     }
 
     private void notifyContactsOfConnectionChange(boolean online) {
-         notifyContactsOfConnectionChange(online, false);
+        notifyContactsOfConnectionChange(online, false);
     }
 
     private void notifyContactsOfConnectionChange(boolean online, boolean signOff) {
@@ -52,6 +53,10 @@ public class FirebaseHelper {
 
             }
         });
+    }
+
+    public void signOff() {
+        notifyContactsOfConnectionChange(User.OFFLINE, true);
     }
 
     private static class SingletonHolder {
